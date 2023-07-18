@@ -18,7 +18,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public List<User> getFullUser() {
+    public List<User> getFull() {
         return userRepository.findAll();
+    }
+
+    public User get(Long id) {
+        return userRepository.findFirstById(id);
     }
 }
