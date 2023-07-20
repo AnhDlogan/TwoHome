@@ -1,28 +1,17 @@
-package com.example.twohome.model;
+package com.example.twohome.entity;
+
+import com.example.twohome.model.IDEntity;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="users")
-public class User {
-    @Id
-    @GeneratedValue
-    private Long id;
-
+public class User extends IDEntity {
     @Column(name = "username")
     private String userName;
     private String email;
     private String password;
     private Integer active;
-
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getUserName() {
         return userName;

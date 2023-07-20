@@ -1,28 +1,35 @@
 package com.example.twohome.service;
 
 
-import com.example.twohome.model.User;
+import com.example.twohome.entity.User;
 import com.example.twohome.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Service
 @Transactional
-public class UserService {
+public class UserService extends CRUDService<User, Long>{
     private UserRepository userRepository;
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
+
+    public UserService(UserRepository userRepository) {
+        super(User.class);
+        this.repository = this.userRepository = userRepository;
     }
 
-    public List<User> getFull() {
-        return userRepository.findAll();
+    @Override
+    public Event create(User user) {
+        User checkUser = userRepository.findFirstByEmail(user.getEmail());
+        if (checkUser != null) {
+            return HandleErrorMessage("duplicate email");
+        }
     }
-
-    public User get(Long id) {
-        return userRepository.findFirstById(id);
-    }
+//
+//    public List<User> getFull() {
+//        return userRepository.findAll();
+//    }
+//
+//    public User get(Long id) {
+//        return userRepository.findFirstById(id);
+//    }
 }
